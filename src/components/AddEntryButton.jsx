@@ -1,5 +1,3 @@
-//import AddEntryModal from "./AddEntryModal";
-
 const AddEntryButton = () => {
   return (
     <button
