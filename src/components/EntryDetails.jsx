@@ -20,20 +20,13 @@ console.log("EntryDetails disabled =", disabled);
             </div>
            <div className="mt-4 flex gap-3">
 
-<button
-            onClick={onDetails}
-            disabled={disabled}
-            disabled={true}
-            className={`
-              px-3 py-1.5 text-sm rounded-md border
-              ${disabled
-                ? "border-gray-200 text-gray-400 cursor-not-allowed"
-                : "border-gray-300 hover:bg-gray-100"}
-            `}
-          >
-            Details
-          </button>
-
+           {(!disabled) &&
+            (<button
+                 onClick={onDetails}
+                className="px-3 py-1.5 text-sm rounded-md border border-gray-300 hover:bg-gray-100" >
+                Details
+            </button>)
+           }
 
                         <button className="px-3 py-1.5 text-sm rounded-md border border-gray-300             hover:bg-gray-100" > Edit   </button>
                         <button className="px-3 py-1.5 text-sm rounded-md border border-red-300 text-red-600 hover:bg-red-100"  > Delete </button>

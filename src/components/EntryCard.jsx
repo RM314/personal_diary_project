@@ -20,7 +20,7 @@ const EntryCard = ({entry}) => {
             className="bg-white rounded-xl shadow-lg w-full max-w-4xl max-h-[90vh] overflow-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <EntryDetails entry={entry} constrained={false} disabled={false} />
+            <EntryDetails entry={entry} constrained={false} disabled={true} />
           </div>
         </div>
       )}

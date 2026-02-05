@@ -11,8 +11,8 @@ const ViewEntryModal = () => {
 
     return (
     <div>
-        <EntryDetails key={entry.date} entry={entry}/>
-    <button>Close</button>
+        <EntryDetails key={entry.date} entry={entry}  constrained ={true} disabled={true} />
+        <button>Close</button>
     </div>
     );
 
