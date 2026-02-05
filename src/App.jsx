@@ -16,7 +16,7 @@ function App() {
     </main>
     <Footer />
     <AddEntryModal /> {/*This modal shows up based on state*/}
-    <ViewEntryModal /> {/*This modal shows up based on state*/}
+    {/* <ViewEntryModal />  This modal shows up based on state */}
     </>
   )
 }

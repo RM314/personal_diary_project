@@ -1,21 +1,26 @@
 import EntryDetails from "./EntryDetails.jsx";
 
-const entry = {
-    title: "my best experience",
-    date: "02. 03. 2025",
-    picture: "https://img.fotocommunity.com/wir-ueben-7d4680fd-c687-4001-92a5-3738b1f82e6d.jpg?height=1080",
-    content: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam "
-};
-
-const ViewEntryModal = () => {
+const ViewEntryModal = ({ open, onClose, children }) => {
 
     return (
-    <div>
-        <EntryDetails key={entry.date} entry={entry}  constrained ={true} disabled={true} />
-        <button>Close</button>
+    <div
+          className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
+          onClick={onClose}
+        >
+        <div
+            className="bg-white rounded-xl shadow-lg w-full max-w-4xl max-h-[90vh] overflow-auto"
+            onClick={(e) => e.stopPropagation()}
+        >
+            <button
+            onClick={onClose}
+            className="absolute top-3 right-3 px-3 py-1.5 text-sm rounded-md border border-gray-300 hover:bg-gray-100"
+            >
+                Close
+            </button>
+            {children}
+        </div>
     </div>
     );
-
 };
 
 export default ViewEntryModal;
