@@ -1,14 +1,14 @@
 import EntryCard from "./EntryCard";
 
+
 const EntryList = ({ entries }) => {
 
     return (
-        <div>
+        <div className="mx-auto max-w-12xl p-4 grid gap-0 md:grid-cols-2 xl:grid-cols-3">
             {entries.map((entry) => (
-                <EntryCard key={entry.id} entry={entry} />
+            <EntryCard key={entry.id} entry={entry} />
             ))}
-        </div>
-    );
+        </div> );
 };
 
 export default EntryList;
