@@ -6,12 +6,12 @@ console.log("EntryDetails disabled =", disabled);
             <h1 className="text-3xl font-semibold mb-4"> {entry.title} </h1>
             <div className="text-gray-600 text-sm mb-3"> {entry.date} </div>
 
-            <div className="flex flex-col md:flex-row md:gap-12 md:items-start overflow-hidden">
-                {(entry.picture) &&
+            <div className="flex flex-col md:flex-row md:gap-3 md:items-start overflow-hidden">
+                {(entry.imageUrl) &&
                 (<div className="md:w-1/3 pt-2 shrink-0">
-                    <img src={entry.picture} alt={entry.date} className="w-full h-auto rounded-lg shadow-md "/>
+                    <img src={entry.imageUrl} alt={entry.date} className="w-full h-auto rounded-lg shadow-md "/>
                 </div>)}
-                <div className={`${entry.picture ? "md:w-2/3" : ""} flex flex-col`}>
+                <div className={`${entry.imageUrl ? "md:w-2/3" : ""} flex flex-col`}>
                     <div className="leading-relaxed overflow-hidden line-clamp-6">
                         {entry.content}
                     </div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { tryAddToDiary } from "../util/storage.js";
 import ErrorMessage from "./ErrorMessage"
 
-const EntryForm = ({ handleSubmit }) => {
+const EntryForm = ({ handleSubmit, onClose}) => {
 
   const [error, setError] = useState(null);
 
@@ -10,6 +10,24 @@ const EntryForm = ({ handleSubmit }) => {
   const [date, setDate] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [content, setContent] = useState("");
+
+ function handleCancel(e) {
+    e.preventDefault();
+    console.log("Cancelling entry addition...");
+    setError(null);
+    onClose();
+  }
+
+  function handleReset(e) {
+    e.preventDefault();
+    console.log("Resetting form...");
+    setError(null);
+    setTitle("");
+    setDate("");
+    setImageUrl("");
+    setContent("");
+  }
+
 
   // check if fields are ok, if so, send it to the parent form to save to the storage
   function checkForErrors(e) {
@@ -91,21 +109,7 @@ const EntryForm = ({ handleSubmit }) => {
 
   );
 
-  function handleCancel(e) {
-    e.preventDefault();
-    console.log("Cancelling entry addition...");
-    setError(null);
-  }
 
-  function handleReset(e) {
-    e.preventDefault();
-    console.log("Resetting form...");
-    setError(null);
-    setTitle("");
-    setDate("");
-    setImageUrl("");
-    setContent("");
-  }
 
 };
 

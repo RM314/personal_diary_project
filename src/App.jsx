@@ -11,16 +11,20 @@ import { loadDiaryEntries } from "./util/storage";
 function App() {
 
   const [entries, setEntries] = useState(loadDiaryEntries());
+  const [addEntry, setAddEntry]=useState(false);
+
+
+  //setAddEntry(true);
 
   return (
     <>
     <Header />
     <main>
-      <AddEntryButton /> {/*This button should open the AddEntryModal when clicked, which contains the EntryForm*/}
+      <AddEntryButton setAddEntry={setAddEntry} /> {/*This button should open the AddEntryModal when clicked, which contains the EntryForm*/}
       <EntryList entries={entries} /> {/*This displays the list of EntryCard and opens ViewEntryModal when clicked, which displays EntryDetails*/}
     </main>
     <Footer />
-    <AddEntryModal onDiaryAdded={handleNewEntry}/> {/*This modal shows up based on state*/}
+    <AddEntryModal onDiaryAdded={handleNewEntry} onClose={() => setAddEntry(false)} isOpen={addEntry} /> {/*This modal shows up based on state*/}
     {/* <ViewEntryModal />  This modal shows up based on state */}
     </>
   )
