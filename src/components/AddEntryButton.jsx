@@ -1,8 +1,8 @@
 const AddEntryButton = () => {
+  // "/opens the Add Entry Modal using useState()/"
   return (
     <button
-      onClick={"*/opens the Add Entry Modal using useState()/*"}
-      className=""   
+      className="btn btn-primary"   
     >
     Add
     </button>

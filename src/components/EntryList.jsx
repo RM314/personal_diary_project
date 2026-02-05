@@ -1,5 +1,6 @@
 import EntryCard from "./EntryCard";
 
+<<<<<<< HEAD
 
 const entry = {
     title: "my best experience",
@@ -28,4 +29,3 @@ const EntryList = () => {
 };
 
 export default EntryList;
-

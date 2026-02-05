@@ -1,5 +1,6 @@
 import { useState } from "react";
 import EntryDetails from "./EntryDetails";
+
 import ViewEntryModal from "./ViewEntryModal";
 const EntryCard = ({entry}) => {
     const [open, setOpen] = useState(false);

@@ -1,6 +1,6 @@
 import EntryDetails from "./EntryDetails.jsx";
 
-const ViewEntryModal = ({ open, onClose, children }) => {
+const ViewEntryModal = ({ onClose, children }) => {
 
     return (
     <div

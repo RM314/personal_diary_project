@@ -1,10 +1,16 @@
 import EntryForm from "./EntryForm.jsx";
 
-const AddEntryModal = () => {
+
+const AddEntryModal = ({ onDiaryAdded }) => {
+  const handleSubmit = (newEntry) => {
+    console.log(`Adding to console`, newEntry);
+    onDiaryAdded(newEntry); // callback to parent to refresh the list
+  };
+
   return (
     <div>
-        <EntryForm />
-        <button>Close</button>
+      <EntryForm handleSubmit={handleSubmit} />
+      <button>Close</button>
     </div>
   );
 };
