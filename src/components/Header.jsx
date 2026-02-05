@@ -6,7 +6,7 @@ const Header = () => {
     <div className="header">
         <img className="logo" src={logo} alt="Diary Logo" />
         <h1>My Personal Diary</h1>
-        <AddEntryButton /> {/*This button should open the AddEntryModal when clicked, which contains the EntryForm*/}
+        <AddEntryButton onClick={() => setAddEntry(true)} /> {/*This button should open the AddEntryModal when clicked, which contains the EntryForm*/}
     </div>
   )
 }

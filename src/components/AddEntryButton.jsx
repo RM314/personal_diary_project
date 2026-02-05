@@ -1,14 +1,8 @@
-
-const AddEntryButton = () => {
-
-     const openAddEntryModal = () => {
-    setAddEntryModalOpen(true);
-  };
-
-    return (
-        <button 
-      onClick={openAddEntryModal}
-      className="btn btn-soft btn-accent p-4 m-4 mt-10"   
+const AddEntryButton = ({setAddEntry}) => {
+  // "/opens the Add Entry Modal using useState()/"
+  return (
+    <button onClick={() => {setAddEntry(true)}}
+      className="btn btn-primary"
     >
     + Add Entry
     </button>
