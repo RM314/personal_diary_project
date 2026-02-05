@@ -11,7 +11,7 @@ const ViewEntryModal = () => {
 
     return (
     <div>
-        <EntryDetails entry={entry}/>
+        <EntryDetails key={entry.date} entry={entry}/>
     <button>Close</button>
     </div>
     );
