@@ -1,15 +1,14 @@
 import EntryCard from "./EntryCard";
 
-const EntryList = () => {
+const EntryList = ({ entries }) => {
 
     return (
-    <div>
-        EntryList
-        <EntryCard />
-        <EntryCard />
-        <EntryCard />
-    </div>);
+        <div>
+            {entries.map((entry) => (
+                <EntryCard key={entry.id} entry={entry} />
+            ))}
+        </div>
+    );
 };
 
 export default EntryList;
-

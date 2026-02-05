@@ -1,18 +1,18 @@
-const EntryDetails = () => {
+const EntryDetails = (entry) => {
 
     return (
     <div>
         <label>
-          Title:
+          Title: {entry.title}
         </label>
         <label>
-            Date: 
+            Date: {entry.date}
         </label>
         <label>
-            Picture:
+            Picture: <img src={entry.imageUrl} alt="Diary entry image" className="w-64 h-64 object-cover rounded-lg" />
         </label>
         <label>
-          Content:
+            Content: {entry.content}
         </label>
     </div>
     );

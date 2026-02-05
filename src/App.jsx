@@ -5,6 +5,9 @@ import ViewEntryModal from "./components/ViewEntryModal"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 
+import { useState } from 'react';
+import { loadDiaryEntries } from "./util/storage";
+
 function App() {
   const [isAddEntryModalOpen, setAddEntryModalOpen] = useState(false);
   const [isViewEntryModalOpen, setViewEntryModalOpen] = useState(false);
@@ -24,6 +27,8 @@ function App() {
     setAddEntryModalOpen(false);
   };
 
+  const [entries, setEntries] = useState(loadDiaryEntries());
+
   return (
     <>
     <Header />
@@ -35,6 +40,10 @@ function App() {
     {isViewEntryModalOpen && <ViewEntryModal entry={selectedEntry} onClose={closeViewEntryModal} />}
     </>
   )
+
+  function handleNewEntry(newEntry) {
+    setEntries([...entries, newEntry]); // ← Just add to existing state
+  }
 }
 
 export default App;

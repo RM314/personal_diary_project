@@ -1,32 +1,111 @@
-const EntryForm = () => {
+import { useState } from "react";
+import { tryAddToDiary } from "../util/storage.js";
+import ErrorMessage from "./ErrorMessage"
 
-    return (
-    <div>
-       <h2>Add New Diary Entry</h2>
-      <form>
-        <label>
+const EntryForm = ({ handleSubmit }) => {
+
+  const [error, setError] = useState(null);
+
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [content, setContent] = useState("");
+
+  // check if fields are ok, if so, send it to the parent form to save to the storage
+  function checkForErrors(e) {
+    e.preventDefault();
+    console.log('checking for errors.... ')
+
+    if (error) {
+      setError(null); // reset previous errors
+    }
+
+    const formData = new FormData(e.target);
+
+    // setting up the checkpoint
+    if (!validated) {
+      setError("All fields are required."); return;
+    }
+
+    console.log("⭐️ Alles in ordnung! ")
+
+    const newEntry = {
+      title: title, date: date, imageUrl: imageUrl,
+      content: content,
+    };
+
+    // dublicate date checkpoint
+    // using Try just in case UI fails to catch
+
+    try {
+      tryAddToDiary(newEntry);
+    } catch (diaryError) {
+      setError(diaryError.message)
+    }
+
+    // finalising
+    handleSubmit(newEntry) // no need to pass event
+
+  }
+
+  const validated = title && date && imageUrl && content
+  const isEmpty = !title && !date && !imageUrl && !content
+
+  const today = new Date().toISOString().split('T')[0];
+
+  function setTodayDate() {
+    setDate(today);
+  }
+
+  return (
+    <div className="flex flex-col space-y-4 p-4 rounded-lg shadow-md ">
+      <h2>Add New Diary Entry</h2>
+      {error && <ErrorMessage error={error} onExit={() => setError(null)} />}
+      <form onSubmit={checkForErrors} className="flex flex-col space-y-4">
+        <label className="flex gap-4">
           Title:
-          <input type="text" name="title" />
+          <input type="text" name="title" className="input" onChange={(e) => setTitle(e.target.value.trim())} />
         </label>
-        <label>
-            Date:
-            <input type="date" name="date" />   
+        <label className="flex gap-4">
+          Date:
+          <input type="date" name="date" className="input" value={date} onChange={(e) => setDate(e.target.value.trim())} />
+          <button className="btn" hidden={date === today} type="button" onClick={setTodayDate}>Today</button>
         </label>
-        <label>
-            Picture:
-            <input type="file" name="picture" />
+        <label className="flex gap-4">
+          Picture URL:
+          <input type="url" name="imageUrl" className="input" onChange={(e) => setImageUrl(e.target.value.trim())} />
+
         </label>
         <label>
           Content:
-          <textarea name="content"></textarea>
+          <textarea name="content" className="textarea textarea-bordered" onChange={(e) => setContent(e.target.value.trim())} />
         </label>
-        
-        <button type="submit">Save Entry</button>
-        <button type="button">Cancel</button>
+
+        <span className="flex gap-2">
+          <button disabled={!validated} type="submit" className="btn btn-primary">Save Entry</button>
+          <button type="button" onClick={handleCancel} className="btn btn-secondary">Cancel</button>
+          <button disabled={isEmpty} type="button" onClick={handleReset} className="btn btn-tertiary">Reset</button>
+        </span>
       </form>
     </div>
 
-    );
+  );
+
+  function handleCancel(e) {
+    e.preventDefault();
+    console.log("Cancelling entry addition...");
+    setError(null);
+  }
+
+  function handleReset(e) {
+    e.preventDefault();
+    console.log("Resetting form...");
+    setError(null);
+    setTitle("");
+    setDate("");
+    setImageUrl("");
+    setContent("");
+  }
 
 };
 

@@ -1,10 +1,10 @@
 import EntryDetails from "./EntryDetails";
 
-const EntryCard = () => {
+const EntryCard = ({ entry }) => {
 
     return (
     <div>
-        <EntryDetails/>
+        <EntryDetails {...entry} />
     </div>
 )};
 
