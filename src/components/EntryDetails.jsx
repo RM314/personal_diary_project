@@ -23,13 +23,13 @@ console.log("EntryDetails disabled =", disabled);
            {(!disabled) &&
             (<button
                  onClick={onDetails}
-                className="px-3 py-1.5 text-sm rounded-md border border-gray-300 hover:bg-gray-100" >
+                className="btn btn-warning" >
                 Details
             </button>)
            }
 
-                        <button className="px-3 py-1.5 text-sm rounded-md border border-gray-300             hover:bg-gray-100" > Edit   </button>
-                        <button className="px-3 py-1.5 text-sm rounded-md border border-red-300 text-red-600 hover:bg-red-100"  > Delete </button>
+                        <button className="btn btn-primary" > Edit   </button>
+                        <button className="btn btn-danger"  > Delete </button>
             </div>
         </div>
     </div>

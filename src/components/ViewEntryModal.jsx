@@ -15,7 +15,7 @@ const ViewEntryModal = ({ isOpen, onClose, entry }) => {
         >
             <button
             onClick={onClose}
-            className="absolute top-3 right-3 px-3 py-1.5 text-sm rounded-md border border-gray-300 hover:bg-gray-100"
+            className="absolute top-3 right-3 px-3 py-1.5 btn text-sm rounded-md border border-gray-300 hover:bg-gray-100 "
             >
                 Close
             </button>
