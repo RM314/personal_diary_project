@@ -1,4 +1,4 @@
-const EntryDetails = ({ entry, constrained = true, disabled, onDetails } ) => {
+const EntryDetails = ({ entry, constrained = true, disabled, onDetails, removeEntry } ) => {
 console.log("EntryDetails disabled =", disabled);
     return (
     <div className={constrained ? "max-w-3xl mx-auto" : ""} >
@@ -28,8 +28,12 @@ console.log("EntryDetails disabled =", disabled);
             </button>)
            }
 
-                        <button className="btn btn-primary" > Edit   </button>
-                        <button className="btn btn-danger"  > Delete </button>
+            <button className="btn btn-primary" > Edit   </button>
+            <button className="btn btn-danger"
+                onClick={removeEntry} >
+                Delete
+            </button>
+
             </div>
         </div>
     </div>

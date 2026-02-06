@@ -1,6 +1,6 @@
 import EntryDetails from "./EntryDetails.jsx";
 
-const ViewEntryModal = ({ isOpen, onClose, entry }) => {
+const ViewEntryModal = ({ isOpen, onClose, removeEntry, entry }) => {
 
     if (!isOpen) return null;
 
@@ -19,7 +19,7 @@ const ViewEntryModal = ({ isOpen, onClose, entry }) => {
             >
                 Close
             </button>
-           <EntryDetails entry={entry} constrained={false} disabled={true} />
+           <EntryDetails entry={entry} constrained={false} disabled={true} removeEntry={(event) => removeEntry(entry)} />
         </div>
     </div>
     );
