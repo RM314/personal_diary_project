@@ -1,18 +1,10 @@
-import { useState } from "react";
 import EntryDetails from "./EntryDetails";
 
-import ViewEntryModal from "./ViewEntryModal";
-const EntryCard = ({entry}) => {
-    const [open, setOpen] = useState(false);
+const EntryCard = ({entry, onClick }) => {
     return (
-    <>
-        <EntryDetails entry={entry} constrained={true} disabled={false} onDetails={() => setOpen(true)}/>
-        {open && (
-            <ViewEntryModal onClose={() => setOpen(false)}>
-                <EntryDetails entry={entry} constrained={false} disabled={true} />
-            </ViewEntryModal>
-        )}
-    </>
+    <div className="bg-white rounded-lg shadow-md p-4 cursor-pointer">
+        <EntryDetails entry={entry} constrained={true} disabled={false} onDetails={(event) => onClick(entry)}/>
+    </div>
 )};
 
 export default EntryCard;

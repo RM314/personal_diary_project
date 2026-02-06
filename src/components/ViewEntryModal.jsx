@@ -19,9 +19,8 @@ const ViewEntryModal = ({ isOpen, onClose, entry }) => {
             >
                 Close
             </button>
-           
+           <EntryDetails entry={entry} constrained={false} disabled={true} />
         </div>
-        <EntryDetails entry={entry} />
     </div>
     );
 };
