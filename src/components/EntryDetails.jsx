@@ -1,5 +1,6 @@
 const EntryDetails = ({ entry, constrained = true, disabled, onDetails, removeEntry, editEntry } ) => {
-//console.log("EntryDetails disabled =", disabled);
+     console.log("EntryDetails editEntry =", editEntry, "typ ", typeof(editEntry));
+
     return (
     <div className={constrained ? "max-w-3xl mx-auto" : ""} >
         <div className="p-6 overflow-hidden">

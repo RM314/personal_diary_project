@@ -1,6 +1,9 @@
 import EntryDetails from "./EntryDetails.jsx";
 
-const ViewEntryModal = ({ isOpen, onClose, removeEntry, entry }) => {
+const ViewEntryModal = ({ isOpen, onClose, removeEntry, editEntry, entry }) => {
+
+    console.log("ViewEntryModal editEntry =", editEntry, "typ ", typeof(editEntry));
+
 
     if (!isOpen) return null;
 
@@ -19,10 +22,11 @@ const ViewEntryModal = ({ isOpen, onClose, removeEntry, entry }) => {
             >
                 Close
             </button>
-           <EntryDetails entry={entry} constrained={false} disabled={true} removeEntry={(event) => removeEntry(entry)} />
+           <EntryDetails entry={entry} constrained={false} disabled={true}  onDetails={null} removeEntry={(event) => removeEntry(entry)} editEntry={(event) => editEntry(entry)}/>
         </div>
     </div>
     );
 };
 
 export default ViewEntryModal;
+

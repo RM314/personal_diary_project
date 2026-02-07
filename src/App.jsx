@@ -53,6 +53,7 @@ function App() {
     isEditRef.current=true;
     console.log("hier editEntry",isEditRef.current);
     setSelectedEntry(entry);
+    setViewEntryModalOpen(false);
     setAddEntryModalOpen(true);
     console.log("hier2 editEntry",isEditRef.current);
   };
@@ -103,7 +104,7 @@ const removeEntry = (entry) => {
       </main>
       <Footer />
         <AddEntryModal isOpen={isAddEntryModalOpen} onClose={closeAddEntryModal} onAddEntry={handleNewEntry} entry={selectedEntry}/>
-        <ViewEntryModal isOpen={isViewEntryModalOpen} onClose={closeViewEntryModal} removeEntry={removeEntry} entry={selectedEntry} />
+        <ViewEntryModal isOpen={isViewEntryModalOpen} onClose={closeViewEntryModal} removeEntry={removeEntry} editEntry={editEntry}  entry={selectedEntry} />
         <ConfirmRemoveModal open={isRemoveModalOpen} selectedEntry={selectedEntry}  onYes={removeEntryYes}  onNo={removeEntryNo}  />
     </>
 
