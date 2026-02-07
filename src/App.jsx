@@ -1,3 +1,9 @@
+
+// todo
+// nach datum sortieren
+// buttons im removedings stylen
+// vom modal aus editieren
+
 import { useState } from "react"
 import AddEntryModal from "./components/AddEntryModal"
 import EntryList from "./components/EntryList"
@@ -6,7 +12,7 @@ import ViewEntryModal from "./components/ViewEntryModal"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 import { loadDiaryEntries, saveDiaryEntries } from "./util/storage";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 function App() {
   const [isAddEntryModalOpen, setAddEntryModalOpen] = useState(false);
@@ -15,8 +21,10 @@ function App() {
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [entries, setEntries] = useState(loadDiaryEntries());
 
+  const isEditRef = useRef(false);
 
   useEffect(() => {
+    console.log("in effect len=",entries.len);
    saveDiaryEntries(entries);
   }, [entries]);
 
@@ -35,15 +43,33 @@ function App() {
   };
 
   const openAddEntryModal = () => {
+    console.log("hier openAddEntryModal",isEdit);
+    isEditRef.current=false;
+    setSelectedEntry(null);
     setAddEntryModalOpen(true);
   };
 
+  const editEntry = (entry) => {
+    isEditRef.current=true;
+    console.log("hier editEntry",isEditRef.current);
+    setSelectedEntry(entry);
+    setAddEntryModalOpen(true);
+    console.log("hier2 editEntry",isEditRef.current);
+  };
+
   const handleNewEntry = (newEntry) => {
-    const entry= {
-      id: Date.now(),
-      ...newEntry
-    };
-    setEntries([...entries, entry]);
+    console.log("handleNewEntry, isEdit=",isEditRef.current," al ",entries.length)
+    if (!isEditRef.current) {
+      const entry= {
+        id: Date.now(), // contrary to storage.js !
+        ...newEntry
+      };
+      setEntries([...entries, entry]); // could be it's async
+    } else {
+     console.log("id= ",newEntry.id);
+     setEntries(prev => prev.map(e => (e.id === newEntry.id) ? newEntry : e));
+    }
+    console.log("al2 ",entries.length);
     closeAddEntryModal();
 };
 
@@ -67,16 +93,16 @@ const removeEntry = (entry) => {
  setRemoveModalOpen(true);
 };
 
-
+ console.log("miten drin ",entries.length);
 
   return (
     <>
       <Header onAddClick={openAddEntryModal} />
       <main>
-        <EntryList onClick={openViewEntryModal} removeEntry={removeEntry} entries={entries} /> {/*This displays the list of EntryCard and opens ViewEntryModal when clicked, which displays EntryDetails*/}
+        <EntryList onClick={openViewEntryModal} removeEntry={removeEntry} editEntry={editEntry} entries={entries} /> {/*This displays the list of EntryCard and opens ViewEntryModal when clicked, which displays EntryDetails*/}
       </main>
       <Footer />
-        <AddEntryModal isOpen={isAddEntryModalOpen} onClose={closeAddEntryModal} onAddEntry={handleNewEntry}/>
+        <AddEntryModal isOpen={isAddEntryModalOpen} onClose={closeAddEntryModal} onAddEntry={handleNewEntry} entry={selectedEntry}/>
         <ViewEntryModal isOpen={isViewEntryModalOpen} onClose={closeViewEntryModal} removeEntry={removeEntry} entry={selectedEntry} />
         <ConfirmRemoveModal open={isRemoveModalOpen} selectedEntry={selectedEntry}  onYes={removeEntryYes}  onNo={removeEntryNo}  />
     </>

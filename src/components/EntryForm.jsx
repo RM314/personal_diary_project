@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { tryAddToDiary } from "../util/storage.js";
 import ErrorMessage from "./ErrorMessage"
 
-const EntryForm = ({ onSubmit, onClose}) => {
+const EntryForm = ({ onSubmit, onClose, entry}) => {
+
+  //console.log("EntryForm1 entry=",entry);
 
   const [error, setError] = useState(null);
 
@@ -10,6 +12,10 @@ const EntryForm = ({ onSubmit, onClose}) => {
   const [date, setDate] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [content, setContent] = useState("");
+
+
+  //console.log("AFFE!!! date= ",(entry) ? entry.date : "");
+  //console.log("AFFE2!!! ",(entry) ?  typeof(entry.date) : "");
 
  function handleCancel(e) {
     e.preventDefault();
@@ -28,6 +34,13 @@ const EntryForm = ({ onSubmit, onClose}) => {
     setContent("");
   }
 
+  // wenn entry neu kommt/wechselst: State befüllen
+    useEffect(() => {
+    setTitle(entry?.title ?? "");
+    setDate(entry?.date ?? "");          // muss "YYYY-MM-DD" sein
+    setImageUrl(entry?.imageUrl ?? "");
+    setContent(entry?.content ?? "");
+  }, [entry]);
 
   // check if fields are ok, if so, send it to the parent form to save to the storage
   function checkForErrors(e) {
@@ -48,6 +61,7 @@ const EntryForm = ({ onSubmit, onClose}) => {
     console.log("⭐️ Alles in ordnung! ")
 
     const newEntry = {
+      id: (entry) ? entry.id : null,
       title: title, date: date, imageUrl: imageUrl,
       content: content,
     };
@@ -56,7 +70,7 @@ const EntryForm = ({ onSubmit, onClose}) => {
     // using Try just in case UI fails to catch
 
     try {
-      tryAddToDiary(newEntry);
+      tryAddToDiary(newEntry,entry!=null);
     } catch (diaryError) {
       setError(diaryError.message)
       return;
@@ -70,10 +84,22 @@ const EntryForm = ({ onSubmit, onClose}) => {
   const validated = title && date && imageUrl && content
   const isEmpty = !title && !date && !imageUrl && !content
 
+  //console.log(" ggg ",title,date,imageUrl,content);
+
+
   const today = new Date().toISOString().split('T')[0];
 
   function setTodayDate() {
     setDate(today);
+  }
+//value={entry ? entry.date : {date}}
+  //console.log("EntryForm entry=",entry);
+
+  if (false) {
+    setTitle(entry.title)
+    setDate(entry.date)
+    setImageUrl(entry.imageUrl)
+    setContent(entry.content)
   }
 
   return (
@@ -83,21 +109,21 @@ const EntryForm = ({ onSubmit, onClose}) => {
       <form onSubmit={checkForErrors} className="flex flex-col space-y-4">
         <label className="flex gap-4">
           Title:
-          <input type="text" name="title" className="input" onChange={(e) => setTitle(e.target.value.trim())} />
+          <input type="text" name="title" className="input" defaultValue={entry ? entry.title : ""} onChange={(e) => setTitle(e.target.value.trim())} />
         </label>
         <label className="flex gap-4">
           Date:
-          <input type="date" name="date" className="input" value={date} onChange={(e) => setDate(e.target.value.trim())} />
+          <input type="date" name="date" className="input"  value={date} onChange={(e) => setDate(e.target.value.trim())} />
           <button className="btn" hidden={date === today} type="button" onClick={setTodayDate}>Today</button>
         </label>
         <label className="flex gap-4">
           Picture URL:
-          <input type="url" name="imageUrl" className="input" onChange={(e) => setImageUrl(e.target.value.trim())} />
+          <input type="url" name="imageUrl" className="input" defaultValue={entry ? entry.imageUrl : ""} onChange={(e) => setImageUrl(e.target.value.trim())} />
 
         </label>
         <label className="flex gap-4">
           Content:
-          <textarea name="content" className="textarea textarea-bordered" onChange={(e) => setContent(e.target.value.trim())} />
+          <textarea name="content" className="textarea textarea-bordered" defaultValue={entry ? entry.content : ""} onChange={(e) => setContent(e.target.value.trim())} />
         </label>
 
         <span className="flex gap-2">
