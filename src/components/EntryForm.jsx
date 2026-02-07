@@ -13,6 +13,8 @@ const EntryForm = ({ onSubmit, onClose, entry}) => {
   const [imageUrl, setImageUrl] = useState("");
   const [content, setContent] = useState("");
 
+  //const [formKey, setFormKey] = useState(0);
+
 
   //console.log("AFFE!!! date= ",(entry) ? entry.date : "");
   //console.log("AFFE2!!! ",(entry) ?  typeof(entry.date) : "");
@@ -32,12 +34,13 @@ const EntryForm = ({ onSubmit, onClose, entry}) => {
     setDate("");
     setImageUrl("");
     setContent("");
+    //setFormKey(k => k + 1);  hack to enforce redisplay
   }
 
-  // wenn entry neu kommt/wechselst: State befüllen
+
     useEffect(() => {
     setTitle(entry?.title ?? "");
-    setDate(entry?.date ?? "");          // muss "YYYY-MM-DD" sein
+    setDate(entry?.date ?? "");
     setImageUrl(entry?.imageUrl ?? "");
     setContent(entry?.content ?? "");
   }, [entry]);
@@ -69,15 +72,13 @@ const EntryForm = ({ onSubmit, onClose, entry}) => {
     // dublicate date checkpoint
     // using Try just in case UI fails to catch
 
-    // its done by the effect method
-    /*
     try {
       tryAddToDiary(newEntry,entry!=null);
     } catch (diaryError) {
       setError(diaryError.message)
       return;
     }
-    */
+
 
     // finalising
     onSubmit(newEntry) // no need to pass event
@@ -132,7 +133,7 @@ const EntryForm = ({ onSubmit, onClose, entry}) => {
         <span className="flex gap-2">
           <button disabled={!validated} type="submit" className="btn btn-primary">Save Entry</button>
           <button type="button" onClick={handleCancel} className="btn btn-secondary">Cancel</button>
-          <button disabled={isEmpty} type="button" onClick={handleReset} className="btn btn-tertiary">Reset</button>
+          <button disabled={isEmpty || entry} type="button" onClick={handleReset} className="btn btn-tertiary">Reset</button>
         </span>
       </form>
     </div>

@@ -18,7 +18,7 @@ export function saveDiaryEntries(entries) {
 }
 
 export function tryAddToDiary(entry, isEdit) {
-    const entries = loadDiaryEntries();
+    let entries = loadDiaryEntries();
 
     // adding uuid to the entry
     if (!isEdit) {
@@ -26,12 +26,14 @@ export function tryAddToDiary(entry, isEdit) {
     }
 
     // double checking the date, in case UI fails
-    const dateExsists = entries.some((d) => d.date === entry.date);
-    if (dateExsists && !isEdit) {
+    //const dateExsists = entries.some((d) => d.date === entry.date);
+    const dateExisting = entries.find(d => d.date === entry.date);
+    if ((!isEdit && dateExisting) || (isEdit && dateExisting && dateExisting.id != entry.id) ) {
         throw new Error(
             "Date already exists! \nChoose a new one or come back tomorrow 💤"
         );
     }
+    // sort missing (overwritten anyway)
     try {
         if (!isEdit) {
             entries.push(entry);
@@ -41,6 +43,7 @@ export function tryAddToDiary(entry, isEdit) {
                 entries[i] = entry;
             }
         }
+        entries=entries.sort((a, b) => a.date.localeCompare(b.date));
         saveDiaryEntries(entries);
     } catch (error) {
         console.error("Can't add to Diary", error);

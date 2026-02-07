@@ -26,7 +26,6 @@ function App() {
   const isEditRef = useRef(false);
 
   useEffect(() => {
-    console.log("in effect len=",entries.len);
    saveDiaryEntries(entries);
   }, [entries]);
 
@@ -45,7 +44,6 @@ function App() {
   };
 
   const openAddEntryModal = () => {
-    console.log("hier openAddEntryModal",isEditRef.current);
     isEditRef.current=false;
     setSelectedEntry(null);
     setAddEntryModalOpen(true);
@@ -53,11 +51,9 @@ function App() {
 
   const editEntry = (entry) => {
     isEditRef.current=true;
-    console.log("hier editEntry",isEditRef.current);
     setSelectedEntry(entry);
     setViewEntryModalOpen(false);
     setAddEntryModalOpen(true);
-    console.log("hier2 editEntry",isEditRef.current);
   };
 
   const handleNewEntry = (newEntry) => {
@@ -65,7 +61,8 @@ function App() {
     if (!isEditRef.current) {
       const entry= {
         ...newEntry,
-        id: Date.now() // contrary to storage.js !
+        id: crypto.randomUUID()
+        //id: Date.now() contrary to storage.js
       };
       console.log("in new",entries.length);
       console.log("id= ",entry.id);
@@ -122,7 +119,7 @@ const removeEntryYes = (entry) => {
   setViewEntryModalOpen(false);
 }
 
-const removeEntryNo = (entry) => {
+const removeEntryNo = () => {
  setRemoveModalOpen(false);
  setViewEntryModalOpen(false);
 }
@@ -132,8 +129,6 @@ const removeEntry = (entry) => {
  console.log(entry);
  setRemoveModalOpen(true);
 };
-
- console.log("miten drin ",entries.length);
 
   return (
     <>

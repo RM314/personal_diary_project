@@ -2,7 +2,7 @@ import EntryDetails from "./EntryDetails.jsx";
 
 const ViewEntryModal = ({ isOpen, onClose, removeEntry, editEntry, entry }) => {
 
-    console.log("ViewEntryModal editEntry =", editEntry, "typ ", typeof(editEntry));
+    //console.log("ViewEntryModal editEntry =", editEntry, "typ ", typeof(editEntry));
 
 
     if (!isOpen) return null;

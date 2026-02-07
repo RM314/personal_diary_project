@@ -1,5 +1,5 @@
 const EntryDetails = ({ entry, constrained = true, disabled, onDetails, removeEntry, editEntry } ) => {
-     console.log("EntryDetails editEntry =", editEntry, "typ ", typeof(editEntry));
+     //console.log("EntryDetails editEntry =", editEntry, "typ ", typeof(editEntry));
 
     return (
     <div className={constrained ? "max-w-3xl mx-auto" : ""} >
@@ -13,7 +13,7 @@ const EntryDetails = ({ entry, constrained = true, disabled, onDetails, removeEn
                     <img src={entry.imageUrl} alt={entry.date} className="w-full h-auto rounded-lg shadow-md "/>
                 </div>)}
                 <div className={`${entry.imageUrl ? "md:w-2/3" : ""} flex flex-col`}>
-                    <div className="leading-relaxed overflow-hidden line-clamp-6">
+                    <div className={constrained ? "leading-relaxed overflow-hidden line-clamp-6 " :"leading-relaxed overflow-hidden"} >
                         {entry.content}
                     </div>
                 </div>
