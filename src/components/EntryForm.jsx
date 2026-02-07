@@ -69,12 +69,15 @@ const EntryForm = ({ onSubmit, onClose, entry}) => {
     // dublicate date checkpoint
     // using Try just in case UI fails to catch
 
+    // its done by the effect method
+    /*
     try {
       tryAddToDiary(newEntry,entry!=null);
     } catch (diaryError) {
       setError(diaryError.message)
       return;
     }
+    */
 
     // finalising
     onSubmit(newEntry) // no need to pass event

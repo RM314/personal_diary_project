@@ -2,7 +2,9 @@
 // todo
 // nach datum sortieren
 // buttons im removedings stylen
-// vom modal aus editieren
+// aktuell ist das speichern in storage deaktiviert
+// idee: nur noch im storage speichern und draussen einfach laden
+// was wenn im edit das datum geändert wird ??
 
 import { useState } from "react"
 import AddEntryModal from "./components/AddEntryModal"
@@ -43,7 +45,7 @@ function App() {
   };
 
   const openAddEntryModal = () => {
-    console.log("hier openAddEntryModal",isEdit);
+    console.log("hier openAddEntryModal",isEditRef.current);
     isEditRef.current=false;
     setSelectedEntry(null);
     setAddEntryModalOpen(true);
@@ -62,14 +64,51 @@ function App() {
     console.log("handleNewEntry, isEdit=",isEditRef.current," al ",entries.length)
     if (!isEditRef.current) {
       const entry= {
-        id: Date.now(), // contrary to storage.js !
-        ...newEntry
+        ...newEntry,
+        id: Date.now() // contrary to storage.js !
       };
-      setEntries([...entries, entry]); // could be it's async
+      console.log("in new",entries.length);
+      console.log("id= ",entry.id);
+      //setEntries([...entries, entry]); // could be it's async
+      setEntries(prev => {
+        const updated = [...prev, entry];
+        const sorted=updated.toSorted((a, b) => b.date.localeCompare(a.date))
+        console.log(sorted.map(e => e.id));
+        return sorted;
+      });
+
+      //setEntries(prev => {
+      //  const updated = prev.map(e => (e.id === newEntry.id) ? newEntry : e);
+      //  return [...updated].sort( (a, b) => b.date.localeCompare(a.date) );
+      //});
+
     } else {
-     console.log("id= ",newEntry.id);
-     setEntries(prev => prev.map(e => (e.id === newEntry.id) ? newEntry : e));
+      console.log("in edit",entries.length);
+      console.log("id= ",newEntry.id);
+      setEntries(prev => {
+        const updated = prev.map(e => (e.id === newEntry.id) ? newEntry : e);
+        /*
+        console.log("in dings2",updated.length);
+        console.log("updated");
+        console.log(updated.map(e => e.date));
+        console.log(updated.map(e => [e.date, typeof e.date]));
+        console.log("vergleich: ",updated[0].date.localeCompare(updated[1].date));
+        */
+        //console.log(updated);
+        //const sorted=[...updated].sort( (a, b) => b.date.localeCompare(a.date) );
+        const sorted=updated.toSorted((a, b) => b.date.localeCompare(a.date))
+        /*
+        console.log("in ding3",sorted.length);
+        console.log("sorted");
+        console.log(sorted.map(e => e.date));
+        console.log(sorted.map(e => [e.date, typeof e.date]));
+        */
+        //console.log(sorted);
+        console.log(sorted.map(e => e.id));
+        return sorted;
+      });
     }
+
     console.log("al2 ",entries.length);
     closeAddEntryModal();
 };
