@@ -1,5 +1,6 @@
-const EntryDetails = ({ entry, constrained = true, disabled, onDetails } ) => {
-console.log("EntryDetails disabled =", disabled);
+const EntryDetails = ({ entry, constrained = true, disabled, onDetails, removeEntry, editEntry } ) => {
+     //console.log("EntryDetails editEntry =", editEntry, "typ ", typeof(editEntry));
+
     return (
     <div className={constrained ? "max-w-3xl mx-auto" : ""} >
         <div className="p-6 overflow-hidden">
@@ -12,7 +13,7 @@ console.log("EntryDetails disabled =", disabled);
                     <img src={entry.imageUrl} alt={entry.date} className="w-full h-auto rounded-lg shadow-md "/>
                 </div>)}
                 <div className={`${entry.imageUrl ? "md:w-2/3" : ""} flex flex-col`}>
-                    <div className="leading-relaxed overflow-hidden line-clamp-6">
+                    <div className={constrained ? "leading-relaxed overflow-hidden line-clamp-6 " :"leading-relaxed overflow-hidden"} >
                         {entry.content}
                     </div>
                 </div>
@@ -28,8 +29,9 @@ console.log("EntryDetails disabled =", disabled);
             </button>)
            }
 
-                        <button className="btn btn-primary" > Edit   </button>
-                        <button className="btn btn-danger"  > Delete </button>
+            <button className="btn btn-primary" onClick={editEntry}> Edit   </button>
+            <button className="btn btn-danger" onClick={removeEntry}>  Delete </button>
+
             </div>
         </div>
     </div>

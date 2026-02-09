@@ -17,21 +17,33 @@ export function saveDiaryEntries(entries) {
     }
 }
 
-export function tryAddToDiary(entry) {
-    const entries = loadDiaryEntries();
-    
+export function tryAddToDiary(entry, isEdit) {
+    let entries = loadDiaryEntries();
+
     // adding uuid to the entry
-    entry.id = crypto.randomUUID();
-    
+    if (!isEdit) {
+        entry.id = crypto.randomUUID();
+    }
+
     // double checking the date, in case UI fails
-    const dateExsists = entries.some((d) => d.date === entry.date);
-    if (dateExsists) {
+    //const dateExsists = entries.some((d) => d.date === entry.date);
+    const dateExisting = entries.find(d => d.date === entry.date);
+    if ((!isEdit && dateExisting) || (isEdit && dateExisting && dateExisting.id != entry.id) ) {
         throw new Error(
             "Date already exists! \nChoose a new one or come back tomorrow 💤"
         );
     }
+    // sort missing (overwritten anyway)
     try {
-        entries.push(entry);
+        if (!isEdit) {
+            entries.push(entry);
+        } else {
+            const i = entries.findIndex(e => e.id === entry.id);
+            if (i !== -1) {
+                entries[i] = entry;
+            }
+        }
+        entries=entries.sort((a, b) => a.date.localeCompare(b.date));
         saveDiaryEntries(entries);
     } catch (error) {
         console.error("Can't add to Diary", error);

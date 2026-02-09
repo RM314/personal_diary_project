@@ -1,8 +1,6 @@
 import EntryForm from "./EntryForm.jsx";
 
-const AddEntryModal = ({ onAddEntry,  isOpen, onClose }) => {
-
-  console.log("AddEntryModal gerendert – isOpen =", isOpen);
+const AddEntryModal = ({ onAddEntry,  isOpen, onClose, entry}) => {
 
     if (!isOpen) return null;
 
@@ -23,7 +21,7 @@ const AddEntryModal = ({ onAddEntry,  isOpen, onClose }) => {
             </button>
 
         <div>
-          <EntryForm onSubmit={onAddEntry} onClose={onClose} />
+          <EntryForm onSubmit={onAddEntry} onClose={onClose} entry={entry} />
         </div>
         </div>
     </div>
